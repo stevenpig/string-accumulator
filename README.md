@@ -1,4 +1,3 @@
 # string-accumulator
 
-Run the program
-mvn clean package
+Run command: mvn clean package
