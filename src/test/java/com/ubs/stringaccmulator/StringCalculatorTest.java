@@ -9,6 +9,8 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.regex.Pattern;
+
 /**
  * Created by Steven on 2/28/2018.
  */
@@ -42,6 +44,9 @@ public class StringCalculatorTest {
 
         res = sc.add("2");
         assertEquals(2, res);
+
+        res = sc.add("123");
+        assertEquals(123, res);
     }
 
     @Test
@@ -64,7 +69,11 @@ public class StringCalculatorTest {
 
     @Test
     public void testAdd_SingleDelimiter() {
-        int res = sc.add("//;\n1;2");
+
+        int res = sc.add("//;\n1");
+        assertEquals(1, res);
+
+        res = sc.add("//;\n1;2");
         assertEquals(3, res);
     }
 
@@ -72,14 +81,25 @@ public class StringCalculatorTest {
     public void testAdd_NegativeNumber() {
 
         expectedEx.expect(IllegalArgumentException.class);
-        expectedEx.expectMessage("negatives not allowed");
-        int res = sc.add("-1,2\n3");
+        expectedEx.expectMessage("negatives not allowed [-1]");
+        sc.add("-1,2\n3");
+    }
+
+    @Test
+    public void testAdd_NegativeNumberList() {
+        expectedEx.expect(IllegalArgumentException.class);
+        expectedEx.expectMessage("negatives not allowed [-1,-3]");
+        sc.add("-1,2\n-3");
     }
 
     @Test
     public void testAdd_BiggerThan1000() {
+
         int res = sc.add("2,1001");
         assertEquals(2, res);
+
+        res = sc.add("1001");
+        assertEquals(0, res);
     }
 
     @Test

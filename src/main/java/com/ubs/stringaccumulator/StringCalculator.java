@@ -34,10 +34,10 @@ public class StringCalculator {
 
     private void  hasNegativeNumbers(List<String> nums) throws IllegalArgumentException{
 
-        List<String> l = nums.stream().filter(n -> n.contains("-")).collect(Collectors.toList());
+        String negNumlist = nums.stream().filter(n -> n.contains("-")).collect(Collectors.joining(","));
 
-        if (l.size() > 0)
-            throw new IllegalArgumentException("negatives not allowed");
+        if (StringUtils.isNotEmpty(negNumlist))
+            throw new IllegalArgumentException(String.format("negatives not allowed [%s]", negNumlist));
     }
 
 }
