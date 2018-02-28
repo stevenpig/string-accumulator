@@ -13,7 +13,6 @@ public class StringCalculator {
 
     public int add(String input) {
 
-        int res = -1;
         if (StringUtils.isEmpty(input)) {
             return 0;
         }
